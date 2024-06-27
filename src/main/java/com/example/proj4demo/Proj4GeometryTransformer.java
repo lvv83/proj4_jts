@@ -12,46 +12,42 @@ import org.locationtech.proj4j.ProjCoordinate;
  */
 public class Proj4GeometryTransformer extends GeometryTransformer {
 
-    private final CoordinateTransform transform;
+	private final CoordinateTransform transform;
 
-    public Proj4GeometryTransformer(CoordinateTransform transform) {
-        if (transform == null)
-        {
-            throw new IllegalArgumentException("transform parameter can not be a null");
-        }
-        this.transform = transform;
-    }
+	public Proj4GeometryTransformer(CoordinateTransform transform) {
+		if (transform == null) {
+			throw new IllegalArgumentException("transform parameter can not be a null");
+		}
+		this.transform = transform;
+	}
 
-    @Override
-    protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent) {
-        
-        if (coords.size() == 0)
-        {
-            return null;
-        }
+	@Override
+	protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent) {
 
-        Coordinate[] transformedCoords = new Coordinate[coords.size()];
+		if (coords.size() == 0) {
+			return null;
+		}
 
-        for (int i = 0; i < coords.size(); i++)
-        {
-            transformedCoords[i] = transformCoordinate(coords, i);
-        }
+		Coordinate[] transformedCoords = new Coordinate[coords.size()];
 
-        return parent.getFactory().getCoordinateSequenceFactory().create(transformedCoords);
-    }
+		for (int i = 0; i < coords.size(); i++) {
+			transformedCoords[i] = transformCoordinate(coords, i);
+		}
 
-    private Coordinate transformCoordinate(CoordinateSequence coords, int index)
-    {
-        ProjCoordinate targetCoordinate = new ProjCoordinate();
+		return parent.getFactory().getCoordinateSequenceFactory().create(transformedCoords);
+	}
 
-        double x = coords.getX(index);
-        double y = coords.getY(index);
+	private Coordinate transformCoordinate(CoordinateSequence coords, int index) {
+		ProjCoordinate targetCoordinate = new ProjCoordinate();
 
-        ProjCoordinate sourceCoordinate = new ProjCoordinate(x, y);
+		double x = coords.getX(index);
+		double y = coords.getY(index);
 
-        transform.transform(sourceCoordinate, targetCoordinate);
+		ProjCoordinate sourceCoordinate = new ProjCoordinate(x, y);
 
-        return new Coordinate(targetCoordinate.x, targetCoordinate.y);
-    }
-    
+		transform.transform(sourceCoordinate, targetCoordinate);
+
+		return new Coordinate(targetCoordinate.x, targetCoordinate.y);
+	}
+
 }

@@ -1,0 +1,7 @@
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
+root = true
+
+[*.java]
+indent_style = tab
+

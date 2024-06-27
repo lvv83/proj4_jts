@@ -16,56 +16,52 @@ import static org.assertj.core.api.Assertions.withPrecision;
 
 public class Proj4GeometryTransformerTest {
 
-    @Test
-    void pointTransformTest()
-    {
-        // Контрольные точки СТО Роскартография 3.5-2020 (Приложение Ж)
-        double wgs84_x = 44.03420944; // 44° 02' 03,154"
-        double wgs84_y = 56.29180389; // 56° 17' 30,494"
-        double p42_x = 44.03599139; // 44° 02' 09,569"
-        double p42_y = 56.29164361; // 56° 17' 29,917"
+	@Test
+	void pointTransformTest() {
+		// Контрольные точки СТО Роскартография 3.5-2020 (Приложение Ж)
+		double wgs84_x = 44.03420944; // 44° 02' 03,154"
+		double wgs84_y = 56.29180389; // 56° 17' 30,494"
+		double p42_x = 44.03599139; // 44° 02' 09,569"
+		double p42_y = 56.29164361; // 56° 17' 29,917"
 
-        // Создаём JTS-геометрию
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Point wgs84_point = geometryFactory.createPoint(new Coordinate(wgs84_x, wgs84_y));
-        
-        // Создаём трансформер
-        Proj4GeometryTransformer transformer = new Proj4GeometryTransformer(createTransform());
-        Point p42_point = (Point)transformer.transform(wgs84_point);
+		// Создаём JTS-геометрию
+		GeometryFactory geometryFactory = new GeometryFactory();
+		Point wgs84_point = geometryFactory.createPoint(new Coordinate(wgs84_x, wgs84_y));
 
-        assertThat(p42_point.getX()).isEqualTo(p42_x, withPrecision(6d));
-        assertThat(p42_point.getY()).isEqualTo(p42_y, withPrecision(6d));
-    }
+		// Создаём трансформер
+		Proj4GeometryTransformer transformer = new Proj4GeometryTransformer(createTransform());
+		Point p42_point = (Point) transformer.transform(wgs84_point);
 
-    @Test
-    void emptyPointTest()
-    {
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Point emptyPoint = geometryFactory.createPoint();
+		assertThat(p42_point.getX()).isEqualTo(p42_x, withPrecision(6d));
+		assertThat(p42_point.getY()).isEqualTo(p42_y, withPrecision(6d));
+	}
 
-        Proj4GeometryTransformer transformer = new Proj4GeometryTransformer(createTransform());
-        Point emptyPointResult = (Point)transformer.transform(emptyPoint);
+	@Test
+	void emptyPointTest() {
+		GeometryFactory geometryFactory = new GeometryFactory();
+		Point emptyPoint = geometryFactory.createPoint();
 
-        assertThat(emptyPointResult.isEmpty()).isTrue();
-    }
+		Proj4GeometryTransformer transformer = new Proj4GeometryTransformer(createTransform());
+		Point emptyPointResult = (Point) transformer.transform(emptyPoint);
 
-    @Test
-    void throwsExceptionOnNullTransformTest()
-    {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Proj4GeometryTransformer(null);
-        });
-        
-    }
+		assertThat(emptyPointResult.isEmpty()).isTrue();
+	}
 
-    private CoordinateTransform createTransform()
-    {
-        CRSFactory crsFactory = new CRSFactory();
-        CoordinateTransformFactory coordinateTransformFactory = new CoordinateTransformFactory();
+	@Test
+	void throwsExceptionOnNullTransformTest() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new Proj4GeometryTransformer(null);
+		});
 
-        CoordinateReferenceSystem wgs84_crs = crsFactory.createFromParameters("WGS84", KnownProjStrings.WGS84);
-        CoordinateReferenceSystem p42_crs = crsFactory.createFromParameters("P42", KnownProjStrings.P42);
+	}
 
-        return coordinateTransformFactory.createTransform(wgs84_crs, p42_crs);
-    }
+	private CoordinateTransform createTransform() {
+		CRSFactory crsFactory = new CRSFactory();
+		CoordinateTransformFactory coordinateTransformFactory = new CoordinateTransformFactory();
+
+		CoordinateReferenceSystem wgs84_crs = crsFactory.createFromParameters("WGS84", KnownProjStrings.WGS84);
+		CoordinateReferenceSystem p42_crs = crsFactory.createFromParameters("P42", KnownProjStrings.P42);
+
+		return coordinateTransformFactory.createTransform(wgs84_crs, p42_crs);
+	}
 }
