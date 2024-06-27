@@ -23,7 +23,7 @@ public class Proj4GeometryTransformer extends GeometryTransformer {
         
         if (coords.size() == 0)
         {
-            return coords.copy();
+            return null;
         }
 
         Coordinate[] transformedCoords = new Coordinate[coords.size()];

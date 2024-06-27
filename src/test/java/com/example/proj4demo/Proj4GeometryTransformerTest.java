@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.withPrecision;
 public class Proj4GeometryTransformerTest {
 
     @Test
-    public void pointTransformTest()
+    void pointTransformTest()
     {
         // Контрольные точки СТО Роскартография 3.5-2020 (Приложение Ж)
         double wgs84_x = 44.03420944; // 44° 02' 03,154"
@@ -33,6 +33,18 @@ public class Proj4GeometryTransformerTest {
 
         assertThat(p42_point.getX()).isEqualTo(p42_x, withPrecision(6d));
         assertThat(p42_point.getY()).isEqualTo(p42_y, withPrecision(6d));
+    }
+
+    @Test
+    void emptyPointTest()
+    {
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Point emptyPoint = geometryFactory.createPoint();
+
+        Proj4GeometryTransformer transformer = new Proj4GeometryTransformer(createTransform());
+        Point emptyPointResult = (Point)transformer.transform(emptyPoint);
+
+        assertThat(emptyPointResult.isEmpty()).isTrue();
     }
 
     private CoordinateTransform createTransform()
