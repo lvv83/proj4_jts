@@ -1,5 +1,7 @@
 package com.example.proj4demo;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -45,6 +47,15 @@ public class Proj4GeometryTransformerTest {
         Point emptyPointResult = (Point)transformer.transform(emptyPoint);
 
         assertThat(emptyPointResult.isEmpty()).isTrue();
+    }
+
+    @Test
+    void throwsExceptionOnNullTransformTest()
+    {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Proj4GeometryTransformer(null);
+        });
+        
     }
 
     private CoordinateTransform createTransform()

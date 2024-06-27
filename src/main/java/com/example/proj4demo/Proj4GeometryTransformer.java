@@ -15,6 +15,10 @@ public class Proj4GeometryTransformer extends GeometryTransformer {
     private final CoordinateTransform transform;
 
     public Proj4GeometryTransformer(CoordinateTransform transform) {
+        if (transform == null)
+        {
+            throw new IllegalArgumentException("transform parameter can not be a null");
+        }
         this.transform = transform;
     }
 
