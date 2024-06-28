@@ -13,13 +13,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Map;
 
 @SpringBootApplication
-public class Proj4DemoApplication implements CommandLineRunner {
+public class Proj4demoApplication1 implements CommandLineRunner {
 
 	@Autowired
 	Map<KnownTransformation, CoordinateTransform> knownTransformations;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Proj4DemoApplication.class, args);
+		SpringApplication.run(Proj4demoApplication1.class, args);
 	}
 
 	@Override
