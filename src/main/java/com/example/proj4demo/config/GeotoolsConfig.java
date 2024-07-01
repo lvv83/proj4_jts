@@ -22,7 +22,6 @@ import com.example.proj4demo.GeotoolsTransformationEngine;
 import com.example.proj4demo.KnownTransformation;
 
 
-
 @Configuration
 public class GeotoolsConfig {
 
@@ -48,6 +47,8 @@ public class GeotoolsConfig {
 		try {
 			map.put(KnownTransformation.WGS84_P42, CRS.findMathTransform(DefaultGeographicCRS.WGS84, knownCRS.get("GT_P42")));
 			map.put(KnownTransformation.P42_WGS84, CRS.findMathTransform(knownCRS.get("GT_P42"), DefaultGeographicCRS.WGS84));
+
+			map.put(KnownTransformation.MSK11_Q4_WGS84, CRS.findMathTransform(knownCRS.get("GT_MSK11Q4"), DefaultGeographicCRS.WGS84));
 		} catch (FactoryException e) {
 			throw new RuntimeException(e);
 		}
@@ -55,26 +56,29 @@ public class GeotoolsConfig {
 	}
 
 	@Bean(name = "GT_P42")
-	CoordinateReferenceSystem p42_wkt()
+	CoordinateReferenceSystem p42()
 	{
-		try {
-			String wkt = readAsString(p42wkt_resource);
-			return CRS.parseWKT(wkt);
-		} catch (FactoryException e) {
-			throw new RuntimeException(e);
-		}
+		return readCRS(p42_resource);
+	}
+
+	@Bean(name = "GT_MSK11Q4")
+	CoordinateReferenceSystem msk11q4()
+	{
+		return readCRS(msk11q4_resource);
 	}
 
 	@Value("classpath:p42.wkt")
-	private Resource p42wkt_resource;
+	private Resource p42_resource;
 
-	String readAsString(Resource resource) {
-		try {
-			try (InputStream stream = resource.getInputStream())
-			{
-				return StreamUtils.copyToString(stream, Charset.defaultCharset());
-			}
-		} catch (IOException e) {
+	@Value("classpath:msk11_q4.wkt")
+	private Resource msk11q4_resource;
+
+	private CoordinateReferenceSystem readCRS(Resource resource) {
+		try (InputStream stream = resource.getInputStream())
+		{
+			String wkt = StreamUtils.copyToString(stream, Charset.defaultCharset());
+			return CRS.parseWKT(wkt);
+		} catch (FactoryException | IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
