@@ -17,6 +17,13 @@
 		<java.version>17</java.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>osgeo</id>
+			<url>https://repo.osgeo.org/repository/release/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 
 		<dependency>
@@ -46,6 +53,21 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-main</artifactId>
+			<version>31.2</version>
+		</dependency>
+
+		<!-- DON'T USE EPSG!!! -->
+		<!-- 
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-hsql</artifactId>
+			<version>31.2</version>
+		</dependency>
+		-->
 
 	</dependencies>
 
