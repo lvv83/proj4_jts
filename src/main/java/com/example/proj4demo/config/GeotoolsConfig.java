@@ -82,16 +82,16 @@ public class GeotoolsConfig {
 		return readCRS(msk11q6_resource);
 	}
 
-	@Value("classpath:p42.wkt")
+	@Value("classpath:wkt/p42.wkt")
 	private Resource p42_resource;
 
-	@Value("classpath:msk11_q4.wkt")
+	@Value("classpath:wkt/msk11_q4.wkt")
 	private Resource msk11q4_resource;
 
-	@Value("classpath:msk11_q5.wkt")
+	@Value("classpath:wkt/msk11_q5.wkt")
 	private Resource msk11q5_resource;
 
-	@Value("classpath:msk11_q6.wkt")
+	@Value("classpath:wkt/msk11_q6.wkt")
 	private Resource msk11q6_resource;
 
 	private CoordinateReferenceSystem readCRS(Resource resource) {
