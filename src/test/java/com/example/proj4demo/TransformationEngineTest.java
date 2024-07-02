@@ -55,7 +55,10 @@ public class TransformationEngineTest {
 				Arguments.of(KnownTransformation.WGS84_P42, p1_wgs84_x, p1_wgs84_y, p1_p42_x, p1_p42_y),
 				Arguments.of(KnownTransformation.P42_WGS84, p1_p42_x, p1_p42_y, p1_wgs84_x, p1_wgs84_y),
 				// Point #2
-				Arguments.of(KnownTransformation.MSK11_Q4_WGS84, 4442499.0447, 629037.2421, 50.83369907, 61.66640579)
+				Arguments.of(KnownTransformation.MSK11_Q4_WGS84, 4442499.0447, 629037.2421, 50.83369907, 61.66640579),
+				// Point #3
+				Arguments.of(KnownTransformation.MSK11_Q5_WGS84, 5289418.39, 848024.02, 53.8016706475, 63.6162921557)
+				// TODO: add test for MSK11_Q6_WGS84
 		);
 	}
 
