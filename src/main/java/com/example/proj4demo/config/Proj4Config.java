@@ -21,7 +21,7 @@ import com.example.proj4demo.KnownTransformation;
 import com.example.proj4demo.Proj4TransformationEngine;
 
 @Configuration
-public class ApplicationConfig {
+public class Proj4Config {
 
 	@Bean
 	Proj4TransformationEngine proj4TransformationEngine(
