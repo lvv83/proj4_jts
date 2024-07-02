@@ -3,6 +3,7 @@ package com.example.proj4demo.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -55,7 +56,8 @@ public class GeotoolsConfig {
 		} catch (FactoryException e) {
 			throw new RuntimeException(e);
 		}
-		return map;
+
+		return Collections.unmodifiableMap(map);
 	}
 
 	@Bean(name = "GT_P42")
