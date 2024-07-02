@@ -9,15 +9,7 @@ public class GeotoolsTransformationEngine extends AbstractTransformationEngine<M
 
 	@Override
 	public Geometry transform(KnownTransformation transformation, Geometry geometryToTransform) {
-		if (transformations == null) {
-			throw new RuntimeException("Transformations not found. Call 'setTransformations' method first");
-		}
-
-		MathTransform transform = transformations.get(transformation);
-		if (transform == null)
-		{
-			throw new RuntimeException("Transformation not set for " + transformation.name());
-		}
+		MathTransform transform = this.getTransformation(transformation);
 
 		try {
 			return JTS.transform(geometryToTransform, transform);

@@ -3,7 +3,7 @@ package com.example.proj4demo;
 import java.util.Map;
 
 public abstract class AbstractTransformationEngine<T> implements TransformationEngine {
-	protected Map<KnownTransformation, T> transformations;
+	private Map<KnownTransformation, T> transformations;
 
 	public void setTransformations(Map<KnownTransformation, T> transformations) {
 		if (transformations == null) {
